@@ -1,0 +1,23 @@
+services:
+    php:
+        image: ${PROJECT_NAME}:dev
+        build:
+            context: ./../
+            dockerfile: ./docker/php/Dockerfile
+            args:
+                DISTRO_VERSION: ${DISTRO_VERSION}
+                PHP_VERSION: ${PHP_VERSION}
+                USER_UID: ${USER_UID}
+            cache_from:
+                - ${PROJECT_NAME}:dev
+        environment:
+            COMPOSER_MEMORY_LIMIT: -1
+            # Debug
+            XDEBUG_MODE: ${XDEBUG_MODE:-off}
+            XDEBUG_SESSION: PHPSTORM # For CLI debugging
+        volumes:
+            - ./../repositories/:/repositories
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        tty: true
+        command: /bin/bash
