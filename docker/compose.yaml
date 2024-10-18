@@ -1,6 +1,6 @@
 services:
     php:
-        image: ${PROJECT_NAME}:dev
+        image: ${PROJECT_NAME}:dev-php
         build:
             context: ./../
             dockerfile: ./docker/php/Dockerfile
@@ -9,7 +9,7 @@ services:
                 PHP_VERSION: ${PHP_VERSION}
                 USER_UID: ${USER_UID}
             cache_from:
-                - ${PROJECT_NAME}:dev
+                - ${PROJECT_NAME}:dev-php
         environment:
             COMPOSER_MEMORY_LIMIT: -1
             # Debug
@@ -17,6 +17,27 @@ services:
             XDEBUG_SESSION: PHPSTORM # For CLI debugging
         volumes:
             - ./../repositories/:/repositories
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        tty: true
+        command: /bin/bash
+
+    go:
+        image: ${PROJECT_NAME}:dev-go
+        build:
+            context: ./../
+            dockerfile: ./docker/go/Dockerfile
+            args:
+                DISTRO_VERSION: ${DISTRO_VERSION}
+                GO_VERSION: ${GO_VERSION}
+                HUGO_VERSION: ${HUGO_VERSION}
+                USER_UID: ${USER_UID}
+            cache_from:
+                - ${PROJECT_NAME}:dev-go
+        ports:
+            - "8080:1313"
+        volumes:
+            - ./../repositories:/repositories
         extra_hosts:
             - host.docker.internal:host-gateway
         tty: true
