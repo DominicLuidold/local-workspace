@@ -35,7 +35,7 @@ services:
             cache_from:
                 - ${PROJECT_NAME}:dev-go
         ports:
-            - "8080:1313"
+            - "8080:8080"
         volumes:
             - ./../repositories:/repositories
         extra_hosts:
