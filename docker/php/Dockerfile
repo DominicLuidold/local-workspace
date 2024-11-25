@@ -13,7 +13,7 @@ RUN apt update && \
     # Git
     apt install -y --no-install-recommends git && \
     # PHP extensions
-    install-php-extensions @composer intl xdebug-^3@stable zip-^1@stable && \
+    install-php-extensions @composer intl xsl xdebug-^3@stable zip-^1@stable && \
     # Symfony CLI
     curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash && \
     apt install -y --no-install-recommends symfony-cli && \
